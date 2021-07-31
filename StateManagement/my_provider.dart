@@ -11,16 +11,20 @@
   
   MyProvider myProvider = Provider.of<MyProvider>(context);
 
-
   myProvider.increase();
-
+  myProvider.decrease();
   
   Consumer<MyProvider>(
-    builder: (_, value, __) {
-      return Center(child: Text(value.getNumber.toString()));
-    },
+    builder: (_, value, __) => Center(
+      child: Text(value.getNumber.toString()),
+    ),
   ),
-
+  Consumer2<MyProvider, MyProvider2>(
+    builder: (_, value, value2, __) => Center(
+      child: Text("${value.getNumber} - ${value2.getNumber2}"),
+    ),
+  ),
+  
 */
 
 
