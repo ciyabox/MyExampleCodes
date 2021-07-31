@@ -3,6 +3,7 @@
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MyProvider()),
+        ChangeNotifierProvider(create: (_) => MyProvider2()),
       ],
       child: MyApp(),
     ),
