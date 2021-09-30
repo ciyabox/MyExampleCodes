@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class CustomMultiSelectList extends StatelessWidget {
   final List<CustomMultiSelectModel> items;
 
-  CustomMultiSelectList(this.items);
+  CustomMultiSelectList({
+    required this.items,
+  });
 
-  late var custumMultiSelectNotifier = CustumMultiSelectNotifier(items);
+  late CustumMultiSelectNotifier custumMultiSelectNotifier =
+      CustumMultiSelectNotifier(items);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class CustomMultiSelectList extends StatelessWidget {
       color: Colors.grey[200],
       child: ValueListenableBuilder(
         valueListenable: custumMultiSelectNotifier,
-        builder: (context, value, child) => Wrap(
+        builder: (_, value, __) => Wrap(
           children: List.generate(
             items.length,
             (index) => multiSelectItem(items[index]),
@@ -26,7 +29,7 @@ class CustomMultiSelectList extends StatelessWidget {
   Widget multiSelectItem(CustomMultiSelectModel item) {
     return InkWell(
       onTap: () {
-        items[item.index].selected = !items[item.index].selected;
+        items[item.index].isSelected = !items[item.index].isSelected;
         custumMultiSelectNotifier.value = items;
       },
       child: Container(
@@ -35,14 +38,9 @@ class CustomMultiSelectList extends StatelessWidget {
         constraints: BoxConstraints.loose(Size(200, 40)),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            color: item.selected ? Colors.deepPurple[200] : Colors.grey[200],
-            border: Border.all(
-              color: Colors.black,
-            )),
-        child: FittedBox(
-          alignment: Alignment.center,
-          child: Text(item.text),
-        ),
+            color: item.isSelected ? Colors.deepPurple[200] : Colors.grey[200],
+            border: Border.all(color: Colors.black)),
+        child: FittedBox(alignment: Alignment.center, child: Text(item.text)),
       ),
     );
   }
@@ -50,20 +48,20 @@ class CustomMultiSelectList extends StatelessWidget {
 
 class CustomMultiSelectModel {
   late int index;
-  late bool selected;
+  late bool isSelected;
   late String text;
 
-  CustomMultiSelectModel(this.index, this.selected, this.text);
+  CustomMultiSelectModel(this.index, this.isSelected, this.text);
   CustomMultiSelectModel.fromMap(Map map) {
     this.index = map["Index"];
-    this.selected = map["Selected"];
+    this.isSelected = map["IsSelected"];
     this.text = map["Text"];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {};
     map["Index"] = index;
-    map["Selected"] = selected;
+    map["IsSelected"] = isSelected;
     map["Text"] = text;
 
     return map;
