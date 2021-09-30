@@ -7,8 +7,7 @@ class CustomMultiSelectList extends StatelessWidget {
     required this.items,
   });
 
-  late var custumMultiSelectNotifier =
-      CustumMultiSelectNotifier(items);
+  late var custumMultiSelectNotifier = CustumMultiSelectNotifier(items);
 
   @override
   Widget build(BuildContext context) {
