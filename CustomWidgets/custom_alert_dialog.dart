@@ -23,13 +23,13 @@ class CustomAlertDialog {
           actions: [
             _buildActionButton(
               context: context,
+              isOK: false,
               buttonFunction: notOkFunction,
-              backgroundColor: Colors.red,
             ),
             _buildActionButton(
               context: context,
+              isOK: true,
               buttonFunction: okFunction,
-              backgroundColor: Colors.green,
             ),
           ],
         );
@@ -39,17 +39,20 @@ class CustomAlertDialog {
 
   Widget _buildActionButton({
     required BuildContext context,
-    required Color backgroundColor,
+    required bool isOK,
     Function()? buttonFunction,
     Color? iconColor,
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: isOK ? Colors.green : Colors.red,
         borderRadius: BorderRadius.circular(24),
       ),
       child: IconButton(
-        icon: Icon(Icons.close, color: iconColor ?? Colors.white),
+        icon: Icon(
+          isOK ? Icons.check : Icons.close,
+          color: iconColor ?? Colors.white,
+        ),
         onPressed: () {
           buttonFunction?.call();
           Navigator.pop(context);
