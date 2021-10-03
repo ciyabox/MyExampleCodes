@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class CustomAlertDialog {
   final String title;
-  final String text;
+  final String description;
   final Function() okFunction;
   final Function()? notOkFunction;
 
   CustomAlertDialog({
     required this.title,
-    required this.text,
+    required this.description,
     required this.okFunction,
     this.notOkFunction,
   });
@@ -19,7 +19,7 @@ class CustomAlertDialog {
       builder: (context) {
         return AlertDialog(
           title: Text(title),
-          content: Text(text),
+          content: Text(description),
           actions: [
             _buildActionButton(
               context: context,
