@@ -43,11 +43,10 @@ class CustomAlertDialog {
     Function()? buttonFunction,
     Color? iconColor,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: isOK ? Colors.green : Colors.red,
-        borderRadius: BorderRadius.circular(24),
-      ),
+    return Card(
+      elevation: 4,
+      shape: CircleBorder(),
+      color: isOK ? Colors.green : Colors.red,
       child: IconButton(
         icon: Icon(
           isOK ? Icons.check : Icons.close,
