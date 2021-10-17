@@ -1,16 +1,3 @@
-/*
-Kullanilan Kutuphaneler
-animator:
-
-Kullanilacak Sayfada Tanimlama
-  final FAB fab = FAB();
-  return Scaffold(
-    appBar: AppBar(),
-    body: Body(),
-    floatingActionButton: fab,
-  );
-*/
-
 import 'package:animator/animator.dart';
 import 'package:flutter/material.dart';
 
@@ -22,11 +9,10 @@ class CustomFAB extends StatelessWidget {
   final Map<String, Tween> _tweenMap = {
     "option2": Tween<Offset>(begin: Offset.zero, end: Offset(0, -2.2)),
     "option1": Tween<Offset>(begin: Offset.zero, end: Offset(0, -1.1)),
-    "add": Tween<double>(begin: 0, end: 135),
+    "main": Tween<double>(begin: 0, end: 135),
   };
 
-  late AnimatorState? _animatorState;
-  AnimatorState? get animatorState => _animatorState;
+  final AnimatorState? animatorState = null;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +22,9 @@ class CustomFAB extends StatelessWidget {
         curve: _curve,
         cycles: _cycle,
         tweenMap: _tweenMap,
-        tween: _tweenMap["add"],
+        tween: _tweenMap["main"],
         builder: (context, animatorState, child) {
-          _animatorState = animatorState;
+          animatorState = animatorState;
           return _buildFAB(context, animatorState);
         });
   }
@@ -73,7 +59,7 @@ class CustomFAB extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: RotationTransition(
               turns: AlwaysStoppedAnimation(
-                animatorState.getAnimation<double>("add").value / 360,
+                animatorState.getAnimation<double>("main").value / 360,
               ),
               child: _buildMainButton(animatorState),
             ),
@@ -85,7 +71,7 @@ class CustomFAB extends StatelessWidget {
 
   _buildMainButton(AnimatorState animatorState) {
     return FloatingActionButton(
-      heroTag: "add",
+      heroTag: "main",
       elevation: 4,
       child: RotationTransition(
         turns: AlwaysStoppedAnimation(180 / 360),
