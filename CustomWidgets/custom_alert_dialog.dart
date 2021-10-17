@@ -18,8 +18,11 @@ class CustomAlertDialog {
       context: context,
       builder: (context) {
         return AlertDialog(
+          // Design
           title: Text(title),
           content: Text(description),
+
+          // Controller
           actions: [
             _buildActionButton(
               context: context,
