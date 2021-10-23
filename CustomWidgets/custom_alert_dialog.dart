@@ -48,7 +48,7 @@ class CustomAlertDialog {
   }) {
     return Card(
       elevation: 4,
-      shape: CircleBorder(),
+      shape: const CircleBorder(),
       color: isOK ? Colors.green : Colors.red,
       child: IconButton(
         icon: Icon(
