@@ -1,57 +1,81 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
-class CustomMultiSelectList<T> extends StatelessWidget {
-  final List<CustomMultiSelectModel<T>> items;
-  final Widget Function(CustomMultiSelectModel<T> item)? itemWidget;
+class CustomMultiSelectList extends StatelessWidget {
+  final List<CustomMultiSelectModel> items;
+  final Widget Function(CustomMultiSelectModel item)? itemWidget;
 
-  CustomMultiSelectList(this.items, {this.itemWidget});
+  CustomMultiSelectList({
+    Key? key,
+    required this.items,
+    this.itemWidget,
+  }) : super(key: key);
 
-  late var _custumMultiSelectNotifier = _CustumMultiSelectNotifier(items);
+  late var custumMultiSelectNotifier = CustumMultiSelectNotifier(items);
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: _custumMultiSelectNotifier,
+      valueListenable: custumMultiSelectNotifier,
       builder: (_, value, __) => Wrap(
-        children: items.map((e) => _multiSelectItem(e)).toList(),
+        children: List.generate(
+          items.length,
+          (index) => multiSelectItem(items[index]),
+        ),
       ),
     );
   }
 
-  Widget _multiSelectItem(CustomMultiSelectModel<T> item) {
+  Widget multiSelectItem(CustomMultiSelectModel item) {
     return InkWell(
       onTap: () {
         items[item.index].isSelected = !items[item.index].isSelected;
-        _custumMultiSelectNotifier.value = items;
+        custumMultiSelectNotifier.value = items;
       },
       child: itemWidget != null
           ? itemWidget!.call(item)
-          : Container(
+          : Card(
               margin: const EdgeInsets.all(4),
-              padding: const EdgeInsets.all(8),
-              constraints: BoxConstraints.loose(const Size(200, 40)),
-              decoration: BoxDecoration(
+              elevation: 8,
+              color: item.isSelected ? Colors.purple[200] : Colors.white,
+              shadowColor: item.isSelected ? Colors.purple[200] : Colors.black,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                color:
-                    item.isSelected ? Colors.deepPurple[200] : Colors.grey[200],
-                border: Border.all(),
               ),
-              child: FittedBox(child: Text(item.value.toString())),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: FittedBox(child: Text(item.text)),
+              ),
             ),
     );
   }
 }
 
-class CustomMultiSelectModel<T> {
+class CustomMultiSelectModel {
   late int index;
   late bool isSelected;
-  late T value;
+  late String text;
 
-  CustomMultiSelectModel(this.index, this.isSelected, this.value);
+  CustomMultiSelectModel(this.index, this.isSelected, this.text);
+  CustomMultiSelectModel.fromMap(Map map) {
+    index = map["Index"];
+    isSelected = map["IsSelected"];
+    text = map["Text"];
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {};
+    map["Index"] = index;
+    map["IsSelected"] = isSelected;
+    map["Text"] = text;
+
+    return map;
+  }
 }
 
-class _CustumMultiSelectNotifier extends ValueNotifier<List> {
-  _CustumMultiSelectNotifier(List value) : super(value);
+class CustumMultiSelectNotifier extends ValueNotifier<List> {
+  CustumMultiSelectNotifier(List value) : super(value);
 
   @override
   List get value => super.value;
