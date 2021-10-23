@@ -1,14 +1,16 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:animator/animator.dart';
 import 'package:flutter/material.dart';
 
 class CustomFAB extends StatelessWidget {
   final AnimatorKey _animatorKey = AnimatorKey();
-  final Duration _duration = Duration(seconds: 1);
+  final Duration _duration = const Duration(seconds: 1);
   final Curve _curve = Curves.easeOutBack;
   final int _cycle = 1;
   final Map<String, Tween> _tweenMap = {
-    "option2": Tween<Offset>(begin: Offset.zero, end: Offset(0, -2.2)),
-    "option1": Tween<Offset>(begin: Offset.zero, end: Offset(0, -1.1)),
+    "option2": Tween<Offset>(begin: Offset.zero, end: const Offset(0, -2.2)),
+    "option1": Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1.1)),
     "main": Tween<double>(begin: 0, end: 135),
   };
 
@@ -43,7 +45,7 @@ class CustomFAB extends StatelessWidget {
             tag: "option2",
             icon: Icons.add,
             onPressFunction: () {
-              print("Option2");
+              debugPrint("Option2");
             },
           ),
           _buildButton(
@@ -52,7 +54,7 @@ class CustomFAB extends StatelessWidget {
             tag: "option1",
             icon: Icons.add,
             onPressFunction: () {
-              print("Option1");
+              debugPrint("Option1");
             },
           ),
           Align(
@@ -73,7 +75,7 @@ class CustomFAB extends StatelessWidget {
     return FloatingActionButton(
       heroTag: "main",
       elevation: 4,
-      child: RotationTransition(
+      child: const RotationTransition(
         turns: AlwaysStoppedAnimation(180 / 360),
         child: Icon(Icons.add, size: 40),
       ),
@@ -96,10 +98,10 @@ class CustomFAB extends StatelessWidget {
           animatorState.controller.status == AnimationStatus.completed
               ? Text(
                   tag,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 )
-              : SizedBox(),
-          SizedBox(width: 8),
+              : const SizedBox.shrink(),
+          const SizedBox(width: 8),
           FloatingActionButton(
             elevation: 1,
             heroTag: tag,
