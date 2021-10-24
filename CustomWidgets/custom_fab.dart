@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
 import 'package:animator/animator.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class CustomFAB extends StatelessWidget {
     "main": Tween<double>(begin: 0, end: 135),
   };
 
-  final AnimatorState? animatorState = null;
+  late AnimatorState? animatorState;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CustomFAB extends StatelessWidget {
         tweenMap: _tweenMap,
         tween: _tweenMap["main"],
         builder: (context, animatorState, child) {
-          animatorState = animatorState;
+          this.animatorState = animatorState;
           return _buildFAB(context, animatorState);
         });
   }
@@ -61,7 +61,7 @@ class CustomFAB extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: RotationTransition(
               turns: AlwaysStoppedAnimation(
-                animatorState.getAnimation<double>("main").value / 360,
+                animatorState.getValue<double>("main") / 360,
               ),
               child: _buildMainButton(animatorState),
             ),
