@@ -15,7 +15,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
     this.child,
     this.hint,
     this.startIndex = 0,
-  });
+  }):assert(items.isNotEmpty || hint != null);
 
   final _CustomDropdownButtonNotifier<T?> _dropdownValueNotifier =
       _CustomDropdownButtonNotifier(null);
