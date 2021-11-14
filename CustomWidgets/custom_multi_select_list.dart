@@ -7,10 +7,9 @@ class CustomMultiSelectList extends StatelessWidget {
   final Widget Function(CustomMultiSelectModel item)? itemWidget;
 
   CustomMultiSelectList({
-    Key? key,
     required this.items,
     this.itemWidget,
-  }) : super(key: key);
+  });
 
   late var custumMultiSelectNotifier = CustumMultiSelectNotifier(items);
 
