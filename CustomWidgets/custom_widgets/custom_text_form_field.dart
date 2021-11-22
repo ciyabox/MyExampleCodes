@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String? value)? onSaved;
   final void Function(String? value)? onChanged;
   final String? Function(String? value)? validator;
+  final Color color;
   final String? errorText;
   final String? labelText;
   final String? hintText;
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onSaved,
     this.onChanged,
     this.validator,
+    this.color = Colors.white,
     this.errorText,
     this.labelText,
     this.hintText,
@@ -43,7 +45,7 @@ class CustomTextFormField extends StatelessWidget {
     this.focus,
   });
   TextStyle? _style;
-  final hideNotifier = _hideNotifier(false);
+  final hideNotifier = _HideNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class CustomTextFormField extends StatelessWidget {
         maxHeight: maxSize.height,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color,
         borderRadius: BorderRadius.all(Radius.circular(radius)),
         boxShadow: shadows == null
             ? [
@@ -87,8 +89,8 @@ class CustomTextFormField extends StatelessWidget {
             suffixIcon: suffixActive
                 ? IconButton(
                     icon: value
-                        ? Icon(Icons.visibility_outlined)
-                        : Icon(Icons.visibility_off_outlined),
+                        ? const Icon(Icons.visibility_outlined)
+                        : const Icon(Icons.visibility_off_outlined),
                     onPressed: () => hideNotifier.value = !value,
                   )
                 : null,
@@ -122,8 +124,8 @@ class CustomTextFormField extends StatelessWidget {
   }
 }
 
-class _hideNotifier<bool> extends ValueNotifier<bool> {
-  _hideNotifier(bool value) : super(value);
+class _HideNotifier<bool> extends ValueNotifier<bool> {
+  _HideNotifier(bool value) : super(value);
 
   @override
   bool get value => super.value;
