@@ -12,7 +12,7 @@ class CustomText extends StatelessWidget {
   const CustomText(
     this.text, {
     this.style,
-    this.scrollAlign = Alignment.center,
+    this.scrollAlign = Alignment.topCenter,
     this.align,
     this.isFitted = true,
   });
