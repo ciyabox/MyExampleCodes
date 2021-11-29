@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 
 class CustomAnimator<T> extends StatelessWidget {
   final Tween<T> tween;
-  final Widget Function(AnimatorState state, T value) child;
+  final Widget Function(AnimatorState state, T value) builder;
   final Duration duration;
   final Curve curve;
 
   CustomAnimator({
     required this.tween,
-    required this.child,
+    required this.builder,
     this.duration = const Duration(milliseconds: 300),
     this.curve = Curves.linear,
   });
@@ -31,7 +31,7 @@ class CustomAnimator<T> extends StatelessWidget {
       tween: tween,
       builder: (_, animatorState, __) {
         _animatorState = animatorState;
-        return child.call(
+        return builder.call(
           _animatorState,
           AlwaysStoppedAnimation<T>(_animatorState.value).value,
         );
