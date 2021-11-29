@@ -1,0 +1,41 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:animator/animator.dart';
+import 'package:flutter/material.dart';
+
+class CustomAnimator<T> extends StatelessWidget {
+  final Tween<T> tween;
+  final Widget Function(AnimatorState state, T value) child;
+  final Duration duration;
+  final Curve curve;
+
+  CustomAnimator({
+    required this.tween,
+    required this.child,
+    this.duration = const Duration(milliseconds: 300),
+    this.curve = Curves.linear,
+  });
+
+  final _animatorKey = AnimatorKey();
+  late AnimatorState _animatorState;
+
+  AnimatorState get animatorState => _animatorState;
+
+  @override
+  Widget build(BuildContext context) {
+    return Animator(
+      animatorKey: _animatorKey,
+      duration: duration,
+      curve: curve,
+      cycles: 1,
+      tween: tween,
+      builder: (_, animatorState, __) {
+        _animatorState = animatorState;
+        return child.call(
+          _animatorState,
+          AlwaysStoppedAnimation<T>(_animatorState.value).value,
+        );
+      },
+    );
+  }
+}
