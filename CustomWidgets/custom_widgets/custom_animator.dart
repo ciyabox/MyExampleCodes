@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class CustomAnimator<T> extends StatelessWidget {
   final Tween<T> tween;
-  final Widget Function(AnimatorState state, T value) builder;
+  final Widget Function(AnimatorState<T> state, T value) builder;
   final Duration duration;
   final Curve curve;
 
@@ -16,14 +16,14 @@ class CustomAnimator<T> extends StatelessWidget {
     this.curve = Curves.linear,
   });
 
-  final _animatorKey = AnimatorKey();
-  late AnimatorState _animatorState;
+  final _animatorKey = AnimatorKey<T>();
+  late AnimatorState<T> _animatorState;
 
-  AnimatorState get animatorState => _animatorState;
+  AnimatorState<T> get animatorState => _animatorState;
 
   @override
   Widget build(BuildContext context) {
-    return Animator(
+    return Animator<T>(
       animatorKey: _animatorKey,
       duration: duration,
       curve: curve,
